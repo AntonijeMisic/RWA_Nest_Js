@@ -4,9 +4,10 @@ import {
   JoinColumn,
   PrimaryColumn
 } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../users/user.entity';
+import { Notification } from './notification.entity';
 
-@Entity()
+@Entity('NotificationUser')
 export class NotificationUser {
   @PrimaryColumn()
   notificationId: number;

@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 
-@Entity()
-export class UserRole {
+@Entity('RequestStatus')
+export class RequestStatus {
   @PrimaryGeneratedColumn()
-  userRoleId: number;
+  requestStatusId: number;
 
   @Column({ type: 'varchar', length: 20, unique: true })
-  roleName: string;
+  requestStatusName: string;
 }

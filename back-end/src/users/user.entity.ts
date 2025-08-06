@@ -1,14 +1,8 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-import { UserRole } from './userRole.entity';
-import { UserPosition } from './userPosition.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { UserPosition } from "../lookups/entities/userPosition.entity";
+import { UserRole } from "../lookups/entities/userRole.entity";
 
-@Entity()
+@Entity('User')
 export class User {
   @PrimaryGeneratedColumn()
   userId: number;
@@ -25,9 +19,15 @@ export class User {
   @Column({ length: 255, nullable: false })
   password: string;
 
+  @Column()
+  userRoleId: number;
+
   @ManyToOne(() => UserRole)
   @JoinColumn({ name: 'userRoleId' })
   userRole: UserRole;
+
+  @Column()
+  userPositionId: number;
 
   @ManyToOne(() => UserPosition)
   @JoinColumn({ name: 'userPositionId' })
@@ -37,5 +37,5 @@ export class User {
   startDate: Date;
 
   @Column({ type: 'date', nullable: true })
-  endDate: Date | null; //ne znam zasto je nullable??
+  endDate: Date | null;
 }

@@ -1,3 +1,6 @@
+import { LeaveType } from 'src/lookups/entities/leaveType.entity';
+import { RequestStatus } from 'src/lookups/entities/requestStatus.entity';
+import { User } from 'src/users/user.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -5,11 +8,8 @@ import {
   ManyToOne,
   JoinColumn
 } from 'typeorm';
-import { LeaveType } from './leaveType.entity';
-import { RequestStatus } from './requestStatus.entity';
-import { User } from './user.entity';
 
-@Entity()
+@Entity('LeaveRequest')
 export class LeaveRequest {
   @PrimaryGeneratedColumn()
   requestId: number;

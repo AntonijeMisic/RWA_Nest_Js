@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 
-@Entity()
-export class RequestStatus {
+@Entity('LeaveType')
+export class LeaveType {
   @PrimaryGeneratedColumn()
-  requestStatusId: number;
+  leaveTypeId: number;
 
   @Column({ type: 'varchar', length: 20, unique: true })
-  requestStatusName: string;
+  leaveTypeName: string;
 }

@@ -5,9 +5,9 @@ import {
   ManyToOne,
   JoinColumn
 } from 'typeorm';
-import { User } from './user.entity';
+import { User } from 'src/users/user.entity';
 
-@Entity()
+@Entity('Announcement')
 export class Announcement {
   @PrimaryGeneratedColumn()
   announcementId: number;

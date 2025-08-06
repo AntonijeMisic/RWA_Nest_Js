@@ -1,10 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 
-@Entity()
-export class LeaveType {
+@Entity('UserRole')
+export class UserRole {
   @PrimaryGeneratedColumn()
-  leaveTypeId: number;
+  userRoleId: number;
 
   @Column({ type: 'varchar', length: 20, unique: true })
-  leaveTypeName: string;
+  roleName: string;
 }

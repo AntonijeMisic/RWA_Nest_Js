@@ -4,7 +4,7 @@ import {
   Column
 } from 'typeorm';
 
-@Entity()
+@Entity('Notification')
 export class Notification {
   @PrimaryGeneratedColumn()
   notification_id: number;
