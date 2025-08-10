@@ -1,19 +1,50 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
-import { UserDto } from './dto/User.dto';
+import * as bcrypt from 'bcrypt';
+import { UserFilterDto } from './dto/userFilter.dto';
+import { UserDto } from './dto/user.dto';
 
 @Injectable()
 export class UsersService {
     constructor(@Inject('USER_REPOSITORY')
     private userRepository: Repository<User>,) { }
 
-    findAll(): Promise<User[]> {
-        return this.userRepository.find();
+    async findAll(filterDto: UserFilterDto): Promise<User[]> {
+        const query = this.userRepository.createQueryBuilder('user');
+
+        if (filterDto.firstName) {
+            query.andWhere('user.firstName ILIKE :firstName', { firstName: `%${filterDto.firstName}%` });
+        }
+
+        if (filterDto.lastName) {
+            query.andWhere('user.lastName ILIKE :lastName', { lastName: `%${filterDto.lastName}%` });
+        }
+
+        if (filterDto.email) {
+            query.andWhere('user.email ILIKE :email', { email: `%${filterDto.email}%` });
+        }
+
+        if (filterDto.userRoleId) {
+            query.andWhere('user.userRoleId = :userRoleId', { userRoleId: filterDto.userRoleId });
+        }
+
+        if (filterDto.userPositionId) {
+            query.andWhere('user.userPositionId = :userPositionId', { userPositionId: filterDto.userPositionId });
+        }
+
+        return query.getMany();
     }
+
 
     findOne(id: number): Promise<User | null> {
         return this.userRepository.findOneBy({ userId: id });
+    }
+
+    async findByEmail(email: string): Promise<User | null> {
+        return this.userRepository.findOne({
+            where: { email },
+        });
     }
 
     async upsertUser(userDto: UserDto): Promise<User> {
@@ -26,17 +57,30 @@ export class UsersService {
                 throw new NotFoundException(`User with id ${userDto.userId} not found`);
             }
 
-            Object.keys(userDto).forEach((key) => {
+            for (const key of Object.keys(userDto)) {
                 const value = userDto[key as keyof UserDto];
                 if (value !== undefined) {
-                    (existingUser as any)[key] = value;
+                    if (key === 'password') {
+                        (existingUser as any)[key] = await bcrypt.hash(value as string, 10);
+                    }
+                    else {
+                        (existingUser as any)[key] = value;
+                    }
                 }
-            });
+            }
 
             return this.userRepository.save(existingUser);
-        } else {
-            const newUser = this.userRepository.create(userDto);
-            return this.userRepository.save(newUser);
+        }
+        else {
+            if (!userDto.password) {
+                throw new BadRequestException('Password is required');
+            }
+            const hashedPassword = await bcrypt.hash(userDto.password, 10);
+            const user = this.userRepository.create({
+                ...userDto,
+                password: hashedPassword,
+            });
+            return this.userRepository.save(user);
         }
     }
 

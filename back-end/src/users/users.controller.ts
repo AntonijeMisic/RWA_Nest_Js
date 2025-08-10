@@ -1,7 +1,10 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Query, UseGuards } from '@nestjs/common';
 import { User } from 'src/users/user.entity';
 import { UsersService } from './users.service';
-import { UserDto } from './dto/User.dto';
+import { UserDto } from './dto/user.dto';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { UserFilterDto } from './dto/userFilter.dto';
 
 @Controller('users')
 export class UsersController {
@@ -9,8 +12,9 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Get()
-    async findAll(): Promise<User[]> {
-        return this.usersService.findAll();
+    @UseGuards(JwtAuthGuard)
+    async getUsers(@Query() filterDto: UserFilterDto) {
+        return this.usersService.findAll(filterDto);
     }
 
     @Get(':id')
@@ -18,7 +22,8 @@ export class UsersController {
         return this.usersService.findOne(+id);
     }
 
-    @Post('upsert')
+    @UseGuards(JwtAuthGuard)
+    @Post('update')
     async upsertUser(@Body() userDto: UserDto): Promise<User> {
         try {
             return await this.usersService.upsertUser(userDto);
@@ -27,6 +32,7 @@ export class UsersController {
         }
     }
 
+    @UseGuards(JwtAuthGuard)
     @Delete(':id')
     async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
         return this.usersService.deleteUser(id);
