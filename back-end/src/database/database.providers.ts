@@ -1,5 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { Announcement } from 'src/announcements/announcement.entity';
+import { RefreshToken } from 'src/auth/refreshToken/refreshToken.entity';
 import { FitPassUsage } from 'src/fitpass-usage/fitpassUsage.entity';
 import { LeaveRequest } from 'src/leave-requests/leaveRequest.entity';
 import { LeaveType } from 'src/lookups/entities/leaveType.entity';
@@ -12,7 +13,7 @@ import { User } from 'src/users/user.entity';
 import { WorkLog } from 'src/worklogs/worklog.entity';
 import { DataSource } from 'typeorm';
 
-const entities = [User, UserRole, LeaveRequest, Announcement, FitPassUsage, Notification, NotificationUser, RequestStatus, WorkLog, UserPosition, LeaveType];
+const entities = [User, UserRole, LeaveRequest, Announcement, FitPassUsage, Notification, NotificationUser, RequestStatus, WorkLog, UserPosition, LeaveType, RefreshToken];
 
 export const databaseProviders = [
   {

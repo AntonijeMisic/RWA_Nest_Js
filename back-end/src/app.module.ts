@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { LookupsModule } from './lookups/lookups.module';
 import { UserModule } from './users/users.module';
 import Joi from 'joi';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import Joi from 'joi';
   }),
     }),
     LookupsModule,
-    UserModule
+    UserModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
