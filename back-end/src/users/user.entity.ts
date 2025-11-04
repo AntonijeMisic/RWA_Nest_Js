@@ -22,16 +22,16 @@ export class User {
   @Column()
   userRoleId: number;
 
-  @ManyToOne(() => UserRole)
+  @ManyToOne(() => UserRole, { eager: true })
   @JoinColumn({ name: 'userRoleId' })
   userRole: UserRole;
 
-  @Column()
-  userPositionId: number;
-
-  @ManyToOne(() => UserPosition)
+  @ManyToOne(() => UserPosition, { eager: true })
   @JoinColumn({ name: 'userPositionId' })
   userPosition: UserPosition;
+
+  @Column()
+  userPositionId: number;
 
   @Column({ type: 'date' })
   startDate: Date;
