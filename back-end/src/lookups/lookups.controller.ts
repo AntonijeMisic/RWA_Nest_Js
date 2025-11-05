@@ -24,4 +24,9 @@ export class LookupsController {
     async getRequestStatuses() {
         return this.lookupsService.getRequestStatuses();
     }
+
+    @Get('lookups')
+    async getLookups() {
+        return this.lookupsService.getAllLookups();
+    }
 }

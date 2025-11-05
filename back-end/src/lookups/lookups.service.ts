@@ -36,4 +36,18 @@ export class LookupsService {
     async getRequestStatuses() {
         return this.requestStatusRepository.find();
     }
+
+    async getAllLookups() {
+        const userRoles = await this.userRoleRepository.find();
+        const userPositions = await this.userPositionRepository.find();
+        const leaveTypes = await this.leaveTypeRepository.find();
+        const requestStatuses = await this.requestStatusRepository.find();
+
+        return {
+            userRoles,
+            userPositions,
+            leaveTypes,
+            requestStatuses,
+        };
+    }
 }
