@@ -11,7 +11,9 @@ export class UsersService {
     private userRepository: Repository<User>,) { }
 
     async findAll(filterDto: UserFilterDto): Promise<User[]> {
-        const query = this.userRepository.createQueryBuilder('user');
+        const query = this.userRepository.createQueryBuilder('user')
+            .leftJoinAndSelect('user.userRole', 'userRole')
+            .leftJoinAndSelect('user.userPosition', 'userPosition');
 
         if (filterDto.firstName) {
             query.andWhere('user.firstName ILIKE :firstName', { firstName: `%${filterDto.firstName}%` });
@@ -36,9 +38,13 @@ export class UsersService {
         return query.getMany();
     }
 
-
-    findOne(id: number): Promise<User | null> {
-        return this.userRepository.findOneBy({ userId: id });
+    async findOne(id: number): Promise<User | null> {
+        return this.userRepository
+            .createQueryBuilder('user')
+            .leftJoinAndSelect('user.userRole', 'userRole')
+            .leftJoinAndSelect('user.userPosition', 'userPosition')
+            .where('user.userId = :id', { id })
+            .getOne();
     }
 
     async findByEmail(email: string): Promise<User | null> {
