@@ -6,6 +6,7 @@ import { LookupsModule } from './lookups/lookups.module';
 import { UserModule } from './users/users.module';
 import Joi from 'joi';
 import { AuthModule } from './auth/auth.module';
+import { AnnouncementModule } from './announcements/announcements.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     LookupsModule,
     UserModule,
+    AnnouncementModule,
     AuthModule
   ],
   controllers: [AppController],
