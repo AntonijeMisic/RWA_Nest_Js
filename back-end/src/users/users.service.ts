@@ -16,21 +16,17 @@ export class UsersService {
             .leftJoinAndSelect('user.userPosition', 'userPosition');
 
         if (filterDto.firstName) {
-            query.andWhere('user.firstName ILIKE :firstName', { firstName: `%${filterDto.firstName}%` });
+            query.andWhere('user.firstName LIKE :firstName', { firstName: `%${filterDto.firstName}%` });
         }
-
         if (filterDto.lastName) {
-            query.andWhere('user.lastName ILIKE :lastName', { lastName: `%${filterDto.lastName}%` });
+            query.andWhere('user.lastName LIKE :lastName', { lastName: `%${filterDto.lastName}%` });
         }
-
         if (filterDto.email) {
-            query.andWhere('user.email ILIKE :email', { email: `%${filterDto.email}%` });
+            query.andWhere('user.email LIKE :email', { email: `%${filterDto.email}%` });
         }
-
         if (filterDto.userRoleId) {
             query.andWhere('user.userRoleId = :userRoleId', { userRoleId: filterDto.userRoleId });
         }
-
         if (filterDto.userPositionId) {
             query.andWhere('user.userPositionId = :userPositionId', { userPositionId: filterDto.userPositionId });
         }
