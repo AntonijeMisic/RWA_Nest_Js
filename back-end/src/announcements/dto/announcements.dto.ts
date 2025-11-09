@@ -15,8 +15,5 @@ export class AnnouncementDto {
     message: string;
 
     @IsOptional()
-    visible_until?: Date | null;
-
-    @IsOptional()
     createdBy?: User;
 }

@@ -21,7 +21,4 @@ export class Announcement {
   @ManyToOne(() => User)
   @JoinColumn({ name: 'created_by' })
   createdBy: User;
-
-  @Column({ type: 'datetime', nullable: true })
-  visible_until: Date | null;
 }
