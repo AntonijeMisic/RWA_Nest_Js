@@ -24,7 +24,12 @@ import { refreshTokenProviders } from './refreshToken/refreshToken.provider';
       }),
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy, ...refreshTokenProviders],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    ...refreshTokenProviders,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}

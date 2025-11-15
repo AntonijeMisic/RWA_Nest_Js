@@ -7,9 +7,9 @@ import { LookupsService } from 'src/lookups/lookups.service';
 import { LookupsModule } from 'src/lookups/lookups.module';
 
 @Module({
-    imports: [DatabaseModule, LookupsModule],
-    controllers: [WorkLogController],
-    providers: [...workLogProviders, WorkLogService],
-    exports: [...workLogProviders, WorkLogService],
+  imports: [DatabaseModule, LookupsModule],
+  controllers: [WorkLogController],
+  providers: [...workLogProviders, WorkLogService],
+  exports: [...workLogProviders, WorkLogService],
 })
-export class WorkLogModule { }
+export class WorkLogModule {}

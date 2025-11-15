@@ -3,7 +3,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 import { User } from '../users/user.entity';
 import { WorkType } from 'src/lookups/entities/workType.entity';

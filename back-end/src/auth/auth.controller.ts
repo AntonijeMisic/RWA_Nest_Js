@@ -5,7 +5,7 @@ import { UserDto } from 'src/users/dto/user.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Post('register')
   register(@Body() dto: UserDto) {

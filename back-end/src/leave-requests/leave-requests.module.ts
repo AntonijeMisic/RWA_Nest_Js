@@ -7,9 +7,9 @@ import { LookupsModule } from 'src/lookups/lookups.module';
 import { UserModule } from 'src/users/users.module';
 
 @Module({
-    imports: [DatabaseModule, LookupsModule, UserModule],
-    controllers: [LeaveRequestController],
-    providers: [...leaveRequestsProviders, LeaveRequestService],
-    exports: [...leaveRequestsProviders, LeaveRequestService],
+  imports: [DatabaseModule, LookupsModule, UserModule],
+  controllers: [LeaveRequestController],
+  providers: [...leaveRequestsProviders, LeaveRequestService],
+  exports: [...leaveRequestsProviders, LeaveRequestService],
 })
-export class LeaveRequestModule { }
+export class LeaveRequestModule {}

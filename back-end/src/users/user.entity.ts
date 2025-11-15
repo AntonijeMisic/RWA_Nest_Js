@@ -1,6 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
-import { UserPosition } from "../lookups/entities/userPosition.entity";
-import { UserRole } from "../lookups/entities/userRole.entity";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { UserPosition } from '../lookups/entities/userPosition.entity';
+import { UserRole } from '../lookups/entities/userRole.entity';
 
 @Entity('User')
 export class User {

@@ -14,7 +14,21 @@ import { User } from 'src/users/user.entity';
 import { WorkLog } from 'src/worklogs/worklog.entity';
 import { DataSource } from 'typeorm';
 
-const entities = [User, UserRole, LeaveRequest, Announcement, FitPassUsage, Notification, NotificationUser, RequestStatus, WorkLog, UserPosition, LeaveType, RefreshToken, WorkType];
+const entities = [
+  User,
+  UserRole,
+  LeaveRequest,
+  Announcement,
+  FitPassUsage,
+  Notification,
+  NotificationUser,
+  RequestStatus,
+  WorkLog,
+  UserPosition,
+  LeaveType,
+  RefreshToken,
+  WorkType,
+];
 
 export const databaseProviders = [
   {

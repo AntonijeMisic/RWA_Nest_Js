@@ -13,7 +13,7 @@ export class AnnouncementsService {
   // CREATE
   async create(announcementDto: AnnouncementDto): Promise<Announcement> {
     const announcement = this.announcementsRepo.create({
-      ...announcementDto
+      ...announcementDto,
     });
     return this.announcementsRepo.save(announcement);
   }
@@ -32,7 +32,8 @@ export class AnnouncementsService {
       where: { announcementId: id },
       relations: ['createdBy'],
     });
-    if (!announcement) throw new NotFoundException(`Announcement ${id} not found`);
+    if (!announcement)
+      throw new NotFoundException(`Announcement ${id} not found`);
     return announcement;
   }
 

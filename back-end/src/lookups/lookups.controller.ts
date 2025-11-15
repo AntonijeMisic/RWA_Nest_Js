@@ -3,30 +3,30 @@ import { LookupsService } from './lookups.service';
 
 @Controller('lookups')
 export class LookupsController {
-    constructor(private readonly lookupsService: LookupsService) { }
+  constructor(private readonly lookupsService: LookupsService) {}
 
-    @Get('roles')
-    async getUserRoles() {
-        return this.lookupsService.getUserRoles();
-    }
+  @Get('roles')
+  async getUserRoles() {
+    return this.lookupsService.getUserRoles();
+  }
 
-    @Get('positions')
-    async getUserPositions() {
-        return this.lookupsService.getUserPositions();
-    }
+  @Get('positions')
+  async getUserPositions() {
+    return this.lookupsService.getUserPositions();
+  }
 
-    @Get('leaveTypes')
-    async getLeaveTypes() {
-        return this.lookupsService.getLeaveTypes();
-    }
+  @Get('leaveTypes')
+  async getLeaveTypes() {
+    return this.lookupsService.getLeaveTypes();
+  }
 
-    @Get('requestStatuses')
-    async getRequestStatuses() {
-        return this.lookupsService.getRequestStatuses();
-    }
+  @Get('requestStatuses')
+  async getRequestStatuses() {
+    return this.lookupsService.getRequestStatuses();
+  }
 
-    @Get('lookups')
-    async getLookups() {
-        return this.lookupsService.getAllLookups();
-    }
+  @Get('lookups')
+  async getLookups() {
+    return this.lookupsService.getAllLookups();
+  }
 }

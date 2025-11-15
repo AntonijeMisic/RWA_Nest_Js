@@ -14,8 +14,8 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     @Inject('REFRESH_TOKEN_REPOSITORY')
-    private refreshTokenRepository: Repository<RefreshToken>
-  ) { }
+    private refreshTokenRepository: Repository<RefreshToken>,
+  ) {}
 
   private getJwtToken(userId: number, email: string) {
     return this.jwtService.sign({ sub: userId, email });
@@ -69,7 +69,6 @@ export class AuthService {
     return result;
   }
 
-
   async refreshToken(token: string) {
     const tokenRecord = await this.refreshTokenRepository.findOne({
       where: { token },
@@ -104,7 +103,9 @@ export class AuthService {
   }
 
   async logout(refreshToken: string): Promise<{ message: string }> {
-    const tokenRecord = await this.refreshTokenRepository.findOneBy({ token: refreshToken });
+    const tokenRecord = await this.refreshTokenRepository.findOneBy({
+      token: refreshToken,
+    });
     if (tokenRecord) {
       await this.refreshTokenRepository.remove(tokenRecord);
     }

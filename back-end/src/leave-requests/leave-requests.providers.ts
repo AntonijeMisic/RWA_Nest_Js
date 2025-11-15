@@ -4,7 +4,8 @@ import { LeaveRequest } from './leaveRequest.entity';
 export const leaveRequestsProviders = [
   {
     provide: 'LEAVE_REQUEST_REPOSITORY',
-    useFactory: (dataSource: DataSource) => dataSource.getRepository(LeaveRequest),
+    useFactory: (dataSource: DataSource) =>
+      dataSource.getRepository(LeaveRequest),
     inject: ['DATA_SOURCE'],
   },
 ];

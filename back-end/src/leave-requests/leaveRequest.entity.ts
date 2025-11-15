@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 
 @Entity('LeaveRequest')
@@ -32,7 +32,7 @@ export class LeaveRequest {
   @JoinColumn({ name: 'requestStatusId' })
   requestStatus: RequestStatus;
 
-  @ManyToOne(() => User, { nullable: true,  eager: true  }, )
+  @ManyToOne(() => User, { nullable: true, eager: true })
   @JoinColumn({ name: 'approverId' })
   approver: User | null;
 

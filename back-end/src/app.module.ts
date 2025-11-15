@@ -15,16 +15,15 @@ import { LeaveRequestModule } from './leave-requests/leave-requests.module';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
-      JWT_SECRET: Joi.string().required(),
-  }),
+        JWT_SECRET: Joi.string().required(),
+      }),
     }),
     LookupsModule,
     UserModule,
     AnnouncementModule,
     AuthModule,
     WorkLogModule,
-    LeaveRequestModule
-
+    LeaveRequestModule,
   ],
   controllers: [AppController],
   providers: [AppService],
