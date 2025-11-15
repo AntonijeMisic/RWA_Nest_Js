@@ -3,6 +3,7 @@ import { RequestStatus } from "src/lookups/entities/requestStatus.entity";
 import { UserPosition } from "src/lookups/entities/userPosition.entity";
 import { UserRole } from "src/lookups/entities/userRole.entity";
 import { DataSource } from "typeorm";
+import { WorkType } from "./entities/workType.entity";
 
 export const lookupProviders = [
   {
@@ -23,6 +24,11 @@ export const lookupProviders = [
   {
     provide: 'REQUEST_STATUS_REPOSITORY',
     useFactory: (dataSource: DataSource) => dataSource.getRepository(RequestStatus),
+    inject: ['DATA_SOURCE'],
+  },
+   {
+    provide: 'WORKLOG_REPOSITORY',
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(WorkType),
     inject: ['DATA_SOURCE'],
   },
 ];
