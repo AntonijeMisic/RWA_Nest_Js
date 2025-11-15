@@ -13,7 +13,6 @@ export class LeaveRequestService {
     private lookupService: LookupsService,
   ) {}
 
-  // ✅ 1. Kreiranje novog zahteva
   async createLeaveRequest(dto: {
     userId: number;
     leaveTypeId: number;
@@ -25,7 +24,7 @@ export class LeaveRequestService {
     const leaveType = await this.lookupService.getLeaveTypeById(
       dto.leaveTypeId,
     );
-    const pendingStatus = await this.lookupService.getRequestStatusById(1); //treba ti pending status
+    const pendingStatus = await this.lookupService.getRequestStatusById(1);
 
     if (!user || !leaveType || !pendingStatus) {
       throw new NotFoundException('Invalid user, leave type, or status');
@@ -45,7 +44,6 @@ export class LeaveRequestService {
     return await this.leaveRequestRepo.save(newRequest);
   }
 
-  // ✅ 2. Dohvatanje svih zahteva (admin)
   async getAllRequests() {
     return this.leaveRequestRepo
       .createQueryBuilder('request')
@@ -57,7 +55,6 @@ export class LeaveRequestService {
       .getMany();
   }
 
-  // ✅ 3. Dohvatanje zahteva za konkretnog korisnika
   async getRequestsByUser(userId: number) {
     return this.leaveRequestRepo
       .createQueryBuilder('lr')
@@ -88,11 +85,10 @@ export class LeaveRequestService {
       .getMany();
   }
 
-  // ✅ 4. Odobravanje ili odbijanje zahteva (admin)
   async updateRequestStatus(
     requestId: number,
     approverId: number,
-    newStatusId: number, // 2 = Approved, 3 = Rejected
+    newStatusId: number,
   ) {
     const request = await this.leaveRequestRepo.findOne({
       where: { requestId },
@@ -115,7 +111,6 @@ export class LeaveRequestService {
     return await this.leaveRequestRepo.save(request);
   }
 
-  // ✅ 5. Brisanje zahteva (ako treba — npr. ako je pending i korisnik odustane)
   async deleteRequest(requestId: number, userId: number) {
     const request = await this.leaveRequestRepo
       .createQueryBuilder('lr')

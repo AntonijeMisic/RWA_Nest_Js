@@ -15,7 +15,6 @@ import { User } from 'src/users/user.entity';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
-import { Roles } from 'src/common/decorators/roles.decorator';
 import { UserFilterDto } from './dto/userFilter.dto';
 
 @Controller('users')
