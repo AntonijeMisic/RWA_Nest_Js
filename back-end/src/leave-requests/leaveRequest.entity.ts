@@ -14,7 +14,7 @@ export class LeaveRequest {
   @PrimaryGeneratedColumn()
   requestId: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'userId' })
   user: User;
 
@@ -32,7 +32,7 @@ export class LeaveRequest {
   @JoinColumn({ name: 'requestStatusId' })
   requestStatus: RequestStatus;
 
-  @ManyToOne(() => User, { nullable: true })
+  @ManyToOne(() => User, { nullable: true,  eager: true  }, )
   @JoinColumn({ name: 'approverId' })
   approver: User | null;
 
