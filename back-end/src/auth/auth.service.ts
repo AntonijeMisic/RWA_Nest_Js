@@ -6,6 +6,7 @@ import { UserDto } from 'src/users/dto/user.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { Repository } from 'typeorm';
 import { RefreshToken } from './refreshToken/refreshToken.entity';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -16,24 +17,18 @@ export class AuthService {
     private refreshTokenRepository: Repository<RefreshToken>,
   ) {}
 
-  private getJwtToken(userId: number, email: string) {
-    return this.jwtService.sign({ sub: userId, email });
+  private getJwtToken(userId: number, email: string, role: string) {
+    return this.jwtService.sign({ sub: userId, email, role });
   }
 
   async register(dto: UserDto) {
     const user = await this.usersService.upsertUser(dto);
-    const token = this.getJwtToken(user.userId, user.email);
+    const token = this.getJwtToken(user.userId, user.email, user.userRole.roleName);
     return { user, access_token: token };
   }
 
-  async login(email: string, password: string) {
-    const user = await this.usersService.findByEmail(email);
-    if (!user) throw new UnauthorizedException('Invalid credentials');
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) throw new UnauthorizedException('Invalid credentials');
-
-    const accessToken = this.getJwtToken(user.userId, user.email);
+  async login(user: User) {
+    const accessToken = this.getJwtToken(user.userId, user.email, user.userRole.roleName);
 
     const refreshTokenValue = uuidv4();
     const expiresAt = new Date();
@@ -64,7 +59,7 @@ export class AuthService {
       return null;
     }
 
-    const { password: _, ...result } = user;
+    const { password: _, ...result } = user; // Remove the password before returning the user object. This ensures Passport never exposes the password in req.user,
     return result;
   }
 
@@ -92,7 +87,7 @@ export class AuthService {
     });
     await this.refreshTokenRepository.save(newRefreshToken);
 
-    const payload = { sub: user.userId, email: user.email };
+    const payload = { sub: user.userId, email: user.email, role: user.userRole.roleName };
     const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
 
     return {

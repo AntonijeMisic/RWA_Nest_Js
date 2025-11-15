@@ -16,13 +16,15 @@ import { UsersService } from './users.service';
 import { UserDto } from './dto/user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 import { UserFilterDto } from './dto/userFilter.dto';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
 
 @Controller('users')
+@UseGuards(JwtAuthGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   async getUsers(@Query() filterDto: UserFilterDto) {
     return this.usersService.findAll(filterDto);
   }
@@ -32,7 +34,8 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(RolesGuard)
+  @Roles('Admin')
   @Post('update')
   async upsertUser(@Body() userDto: UserDto): Promise<User> {
     try {
@@ -45,7 +48,8 @@ export class UsersController {
     }
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(RolesGuard)
+  @Roles('Admin')
   @Delete(':id')
   async deleteUser(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.usersService.deleteUser(id);

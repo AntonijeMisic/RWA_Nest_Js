@@ -1,8 +1,10 @@
-import { Controller, Post, Body, Get, Query, Param } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, Param, UseGuards } from '@nestjs/common';
 import { WorkLogService } from './worklogs.service';
 import { WorkLog } from './worklog.entity';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
 
 @Controller('worklog')
+@UseGuards(JwtAuthGuard)
 export class WorkLogController {
   constructor(private readonly workLogService: WorkLogService) {}
 

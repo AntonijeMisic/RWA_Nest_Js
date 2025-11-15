@@ -7,16 +7,23 @@ import {
   Patch,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateLeaveRequestDto } from './dto/create-leave-request.dto';
 import { UpdateStatusDto } from './dto/update-status.dto';
 import { LeaveRequestService } from './leave-requests.service';
 import { LeaveRequest } from './leaveRequest.entity';
+import { JwtAuthGuard } from 'src/auth/jwt.auth.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { RolesGuard } from 'src/common/guards/roles.guard';
 
 @Controller('leave-requests')
+@UseGuards(JwtAuthGuard)
 export class LeaveRequestController {
   constructor(private readonly service: LeaveRequestService) {}
 
+  @UseGuards(RolesGuard)
+  @Roles('Admin')
   @Post()
   create(@Body() dto: CreateLeaveRequestDto) {
     return this.service.createLeaveRequest(dto);
@@ -45,6 +52,8 @@ export class LeaveRequestController {
     );
   }
 
+  @UseGuards(RolesGuard)
+  @Roles('Admin')
   @Patch('status')
   updateStatus(@Body() dto: UpdateStatusDto) {
     return this.service.updateRequestStatus(
@@ -54,6 +63,8 @@ export class LeaveRequestController {
     );
   }
 
+  @UseGuards(RolesGuard)
+  @Roles('Admin')
   @Delete(':requestId/:userId')
   deleteRequest(
     @Param('requestId') requestId: number,
