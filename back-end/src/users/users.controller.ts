@@ -34,8 +34,6 @@ export class UsersController {
     return this.usersService.findOne(+id);
   }
 
-  @UseGuards(RolesGuard)
-  @Roles('Admin')
   @Post('update')
   async upsertUser(@Body() userDto: UserDto): Promise<User> {
     try {

@@ -22,8 +22,6 @@ import { RolesGuard } from 'src/common/guards/roles.guard';
 export class LeaveRequestController {
   constructor(private readonly service: LeaveRequestService) {}
 
-  @UseGuards(RolesGuard)
-  @Roles('Admin')
   @Post()
   create(@Body() dto: CreateLeaveRequestDto) {
     return this.service.createLeaveRequest(dto);
